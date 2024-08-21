@@ -26,6 +26,8 @@ Cross-Platform: Available for multiple platforms, including Linux, Windows, macO
 
 Deploying a WireGuard VPN server in Amazon Web Services (AWS) provides a secure and scalable way to connect to a private network or the internet via an encrypted tunnel. By configuring a WireGuard VPN server in AWS, you can ensure that all your internet traffic is encrypted and routed through a secure server, which is particularly useful when accessing resources remotely or when using public Wi-Fi.
 
+![Wire_Guard-Final](https://github.com/user-attachments/assets/6973bcb3-d66d-4cfe-a849-72fc9028f137)
+
 # Server Setup:
 OS: Ubuntu 20.04 /22.04
 
@@ -38,6 +40,8 @@ Select an instance type. For personal use, a t2.micro instance (free tier eligib
 Configure your instance details and storage.
 Under “Security Group,” add rules to allow traffic for SSH (port 22) and WireGuard (port 51820/UDP).
 Review and launch your instance, and make sure to download the key pair.
+
+![WireGuard_seqence_final](https://github.com/user-attachments/assets/639e5ba2-37ce-428e-a4bf-cf3bf3075406)
 
 # Install Wireguard on AWS EC2 Instance:
 ```
@@ -55,6 +59,8 @@ Public Key:
 ```
 sudo cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public.key
 ```
+![Screenshot from 2024-08-09 15-31-52](https://github.com/user-attachments/assets/1768af6b-93ce-480c-802e-3b614c022354)
+
 
 # Create Wireguard server configuration:
 
@@ -156,6 +162,8 @@ sudo ufw enable
 ```
 Leave UFW configuration steps in case it is disabled on your server.
 
+![Screenshot from 2024-08-09 15-28-46](https://github.com/user-attachments/assets/94d7359a-31a5-4f17-9c16-c2e34e40380b)
+
 
 # Starting the Wireguard Server:
 
@@ -203,6 +211,9 @@ Aug 25 15:24:14 wg0 systemd[1]: Finished WireGuard via wg-quick(8) for wg0.
 ]
 The output shows the ip commands that are used to create the virtual wg0 device and assign it the IPv4 and IPv6 addresses that you added to the configuration file. You can use these rules to troubleshoot the tunnel, or with the wg command itself if you would like to try manually configuring the VPN interface.
 
+![Screenshot from 2024-08-09 15-28-24](https://github.com/user-attachments/assets/e19f325c-f053-48fa-84fc-91ee642c2f01)
+
+
 # Configuring a Wireguard Peer (Client):
 
 Install wireguard on the client:
@@ -225,7 +236,7 @@ Public Key:
 ```
 sudo cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public.key
 ```
-Creating the WireGuard Peer’s Configuration File
+# Creating the WireGuard Peer’s Configuration File
 
 Now that you have a key pair, you can create a configuration file for the peer that contains all the information that it needs to establish a connection to the WireGuard Server.
 
@@ -334,6 +345,8 @@ If you would like to remove a peer’s configuration from the WireGuard Server c
 sudo wg set wg0 peer PeURxj4Q75RaVhBKkRTpNsBPiPSGb5oQijgJsTa29hg= allowed-ips 10.0.0.2
 ```
 Typically you will only need to remove a peer configuration if the peer no longer exists, or if its encryption keys are compromised or changed. Otherwise, it is better to leave the configuration in place so that the peer can reconnect to the VPN without requiring you to add its key and allowed IPs each time.
+
+![Screenshot from 2024-08-09 18-14-20](https://github.com/user-attachments/assets/256b924b-a633-481f-9168-6a8f74816561)
 
 
 This setup allows you to securely connect to your private network from anywhere in the world. WireGuard’s simplicity, speed, and security make it an excellent choice for VPN solutions.
